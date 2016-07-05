@@ -1,11 +1,10 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: rlauer
+ * User: Bambam & Sarai
  * Date: 2016-07-03
  * Time: 09:46
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+ 
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -22,9 +21,7 @@ namespace Choicy
 		
 		public MainForm()
 		{
-			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
 			
 			//
@@ -32,25 +29,50 @@ namespace Choicy
 			//
 		}
 		
-		void BtnChooseClick(object sender, EventArgs e)
+		void ResetSelectionText ( ) 
 		{
+			// reset the whole rich text box to black default font
+			rtbSelectionText.SelectAll();
+			rtbSelectionText.SelectionFont = rtbSelectionText.Font;
+			rtbSelectionText.SelectionColor = Color.Black;
+			
 			// make the first line bold
 			int iFirstCharIndex = rtbSelectionText.GetFirstCharIndexFromLine( 0 );
 			string strChoosenLineText = rtbSelectionText.Lines[0];
 			rtbSelectionText.Select(iFirstCharIndex, strChoosenLineText.Length);
 			rtbSelectionText.SelectionColor = Color.Black;
 			rtbSelectionText.SelectionFont = new Font(rtbSelectionText.Font, rtbSelectionText.Font.Style | FontStyle.Bold);
-			
-			// make the last choosen line black
-			iFirstCharIndex = rtbSelectionText.GetFirstCharIndexFromLine( iRandomLine );
-			strChoosenLineText = rtbSelectionText.Lines[iRandomLine];
-			rtbSelectionText.Select(iFirstCharIndex, strChoosenLineText.Length);
-			rtbSelectionText.SelectionColor = Color.Black;
-			rtbSelectionText.SelectionFont = new Font(rtbSelectionText.Font, rtbSelectionText.Font.Style | FontStyle.Regular);
+			rtbSelectionText.Update();
+		}
+		
+		bool CheckInput()
+		{
+			if (rtbSelectionText.Lines.Length < 2 ) {
+				MessageBox.Show("There are not enought choises in the input.\nNote that the first line is the title.", 
+				                "Choisy Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+				return false;
+			}
+			int iChoices = 0;
+			foreach ( string strLine in rtbSelectionText.Lines ) {
+				if (strLine.Length > 0 ) iChoices++;
+			}
+			if ( iChoices < 3 ) {
+				MessageBox.Show("There have to be at least two choices in the list.\nNote that the first line is the title.", 
+				                "Choisy Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+				return false;
+			}
+			return true;
+		}
+		
+		void ChooseNewLine ( )
+		{
+			ResetSelectionText ( );
 
-			// get a new random line
 			var rndThis = new Random( );
-			strChoosenLineText = "";
+			int iFirstCharIndex = 0;
+			string strChoosenLineText = "";
+			
+			// get a new random line
 			while ( strChoosenLineText.Length == 0 ) {
 				iRandomLine = rndThis.Next( 1, rtbSelectionText.Lines.Length );
 				iFirstCharIndex = rtbSelectionText.GetFirstCharIndexFromLine( iRandomLine );
@@ -61,25 +83,20 @@ namespace Choicy
 			rtbSelectionText.Select(iFirstCharIndex, strChoosenLineText.Length);
 			rtbSelectionText.SelectionColor = Color.Green;
 			rtbSelectionText.SelectionFont = new Font(rtbSelectionText.Font, rtbSelectionText.Font.Style | FontStyle.Bold);
-
-			rtbSelectionText.Select(0,0);
-			rtbSelectionText.SelectionColor = Color.White;
 		}
 		
-		void LblChoicyClick(object sender, EventArgs e)
+		void BtnChooseClick(object sender, EventArgs e)
 		{
-	
-		}
-		
-		void RtbSelectionTextTextChanged(object sender, EventArgs e)
-		{
-	
+			if ( !CheckInput() ) return;
+			ChooseNewLine ( );
 		}
 		
 		void BtnOpenClick(object sender, EventArgs e)
 		{
 			if ( ofdChoicy.ShowDialog() == DialogResult.OK ) {	
 				rtbSelectionText.LoadFile ( ofdChoicy.FileName );
+				ResetSelectionText();
+				sfdChoicy.FileName = ofdChoicy.FileName;
 			}
 		}
 		
