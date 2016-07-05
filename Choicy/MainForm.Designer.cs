@@ -18,13 +18,17 @@ namespace Choicy
 		private System.Windows.Forms.TabPage tpText;
 		private System.Windows.Forms.TabPage tpAbout;
 		private System.Windows.Forms.Label lblCopyright;
-		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.StatusStrip ssChoicy;
 		private System.Windows.Forms.RichTextBox rtbSelectionText;
 		private System.Windows.Forms.Button btnChoose;
-		private System.Windows.Forms.RadioButton rbWords;
-		private System.Windows.Forms.RadioButton rbLines;
 		private System.Windows.Forms.Label lblVersion;
 		private System.Windows.Forms.Label lblChoicy;
+		private System.Windows.Forms.TabPage tpIntructions;
+		private System.Windows.Forms.RichTextBox rtbInstructions;
+		private System.Windows.Forms.Button btnOpen;
+		private System.Windows.Forms.Button btnSave;
+		private System.Windows.Forms.SaveFileDialog sfdChoicy;
+		private System.Windows.Forms.OpenFileDialog ofdChoicy;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -49,66 +53,70 @@ namespace Choicy
 		{
 			this.tcChoicy = new System.Windows.Forms.TabControl();
 			this.tpText = new System.Windows.Forms.TabPage();
-			this.rbWords = new System.Windows.Forms.RadioButton();
-			this.rbLines = new System.Windows.Forms.RadioButton();
+			this.btnOpen = new System.Windows.Forms.Button();
+			this.btnSave = new System.Windows.Forms.Button();
 			this.rtbSelectionText = new System.Windows.Forms.RichTextBox();
 			this.btnChoose = new System.Windows.Forms.Button();
+			this.tpIntructions = new System.Windows.Forms.TabPage();
+			this.rtbInstructions = new System.Windows.Forms.RichTextBox();
 			this.tpAbout = new System.Windows.Forms.TabPage();
 			this.lblVersion = new System.Windows.Forms.Label();
 			this.lblChoicy = new System.Windows.Forms.Label();
 			this.lblCopyright = new System.Windows.Forms.Label();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.ssChoicy = new System.Windows.Forms.StatusStrip();
+			this.sfdChoicy = new System.Windows.Forms.SaveFileDialog();
+			this.ofdChoicy = new System.Windows.Forms.OpenFileDialog();
 			this.tcChoicy.SuspendLayout();
 			this.tpText.SuspendLayout();
+			this.tpIntructions.SuspendLayout();
 			this.tpAbout.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tcChoicy
 			// 
 			this.tcChoicy.Controls.Add(this.tpText);
+			this.tcChoicy.Controls.Add(this.tpIntructions);
 			this.tcChoicy.Controls.Add(this.tpAbout);
 			this.tcChoicy.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tcChoicy.Location = new System.Drawing.Point(0, 0);
 			this.tcChoicy.Name = "tcChoicy";
 			this.tcChoicy.SelectedIndex = 0;
-			this.tcChoicy.Size = new System.Drawing.Size(284, 262);
+			this.tcChoicy.Size = new System.Drawing.Size(393, 262);
 			this.tcChoicy.TabIndex = 0;
 			// 
 			// tpText
 			// 
-			this.tpText.Controls.Add(this.rbWords);
-			this.tpText.Controls.Add(this.rbLines);
+			this.tpText.Controls.Add(this.btnOpen);
+			this.tpText.Controls.Add(this.btnSave);
 			this.tpText.Controls.Add(this.rtbSelectionText);
 			this.tpText.Controls.Add(this.btnChoose);
 			this.tpText.Location = new System.Drawing.Point(4, 22);
 			this.tpText.Name = "tpText";
 			this.tpText.Padding = new System.Windows.Forms.Padding(3);
-			this.tpText.Size = new System.Drawing.Size(276, 236);
+			this.tpText.Size = new System.Drawing.Size(385, 236);
 			this.tpText.TabIndex = 0;
 			this.tpText.Text = "Text";
 			this.tpText.UseVisualStyleBackColor = true;
 			// 
-			// rbWords
+			// btnOpen
 			// 
-			this.rbWords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.rbWords.Location = new System.Drawing.Point(146, 6);
-			this.rbWords.Name = "rbWords";
-			this.rbWords.Size = new System.Drawing.Size(60, 24);
-			this.rbWords.TabIndex = 3;
-			this.rbWords.Text = "Words";
-			this.rbWords.UseVisualStyleBackColor = true;
+			this.btnOpen.Location = new System.Drawing.Point(221, 6);
+			this.btnOpen.Name = "btnOpen";
+			this.btnOpen.Size = new System.Drawing.Size(75, 23);
+			this.btnOpen.TabIndex = 3;
+			this.btnOpen.Text = "Open";
+			this.btnOpen.UseVisualStyleBackColor = true;
+			this.btnOpen.Click += new System.EventHandler(this.BtnOpenClick);
 			// 
-			// rbLines
+			// btnSave
 			// 
-			this.rbLines.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.rbLines.Checked = true;
-			this.rbLines.Location = new System.Drawing.Point(212, 6);
-			this.rbLines.Name = "rbLines";
-			this.rbLines.Size = new System.Drawing.Size(56, 24);
-			this.rbLines.TabIndex = 2;
-			this.rbLines.TabStop = true;
-			this.rbLines.Text = "Lines";
-			this.rbLines.UseVisualStyleBackColor = true;
+			this.btnSave.Location = new System.Drawing.Point(302, 6);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(75, 23);
+			this.btnSave.TabIndex = 2;
+			this.btnSave.Text = "Save";
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
 			// 
 			// rtbSelectionText
 			// 
@@ -117,10 +125,12 @@ namespace Choicy
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.rtbSelectionText.Location = new System.Drawing.Point(8, 35);
 			this.rtbSelectionText.Name = "rtbSelectionText";
-			this.rtbSelectionText.Size = new System.Drawing.Size(260, 180);
+			this.rtbSelectionText.Size = new System.Drawing.Size(369, 180);
 			this.rtbSelectionText.TabIndex = 1;
-			this.rtbSelectionText.Text = "Right text here and click \"Choose\".\n\nPizza\nBurger\nChicken\nSushi\nPhad Thai\nSalad\nI" +
-	"ce cream";
+			this.rtbSelectionText.Text = "Write the title here, your choices below the title and click \"Choose\".\n\nPizza\nBur" +
+	"ger\nChicken\nSushi\nPhad Thai\nSalad\nIce cream";
+			this.rtbSelectionText.WordWrap = false;
+			this.rtbSelectionText.TextChanged += new System.EventHandler(this.RtbSelectionTextTextChanged);
 			// 
 			// btnChoose
 			// 
@@ -132,6 +142,26 @@ namespace Choicy
 			this.btnChoose.UseVisualStyleBackColor = true;
 			this.btnChoose.Click += new System.EventHandler(this.BtnChooseClick);
 			// 
+			// tpIntructions
+			// 
+			this.tpIntructions.Controls.Add(this.rtbInstructions);
+			this.tpIntructions.Location = new System.Drawing.Point(4, 22);
+			this.tpIntructions.Name = "tpIntructions";
+			this.tpIntructions.Size = new System.Drawing.Size(385, 236);
+			this.tpIntructions.TabIndex = 2;
+			this.tpIntructions.Text = "Intructions";
+			this.tpIntructions.UseVisualStyleBackColor = true;
+			// 
+			// rtbInstructions
+			// 
+			this.rtbInstructions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rtbInstructions.Location = new System.Drawing.Point(0, 0);
+			this.rtbInstructions.Name = "rtbInstructions";
+			this.rtbInstructions.Size = new System.Drawing.Size(385, 236);
+			this.rtbInstructions.TabIndex = 0;
+			this.rtbInstructions.Text = "Click \"Choose\" to make your desision. \n\nWarning; if there are only emty lines to " +
+	"choose from, Choicy will get stuck.";
+			// 
 			// tpAbout
 			// 
 			this.tpAbout.Controls.Add(this.lblVersion);
@@ -140,7 +170,7 @@ namespace Choicy
 			this.tpAbout.Location = new System.Drawing.Point(4, 22);
 			this.tpAbout.Name = "tpAbout";
 			this.tpAbout.Padding = new System.Windows.Forms.Padding(3);
-			this.tpAbout.Size = new System.Drawing.Size(276, 236);
+			this.tpAbout.Size = new System.Drawing.Size(385, 236);
 			this.tpAbout.TabIndex = 1;
 			this.tpAbout.Text = "About";
 			this.tpAbout.UseVisualStyleBackColor = true;
@@ -151,7 +181,7 @@ namespace Choicy
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblVersion.Location = new System.Drawing.Point(8, 57);
 			this.lblVersion.Name = "lblVersion";
-			this.lblVersion.Size = new System.Drawing.Size(260, 23);
+			this.lblVersion.Size = new System.Drawing.Size(369, 23);
 			this.lblVersion.TabIndex = 2;
 			this.lblVersion.Text = "0.1";
 			this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -163,7 +193,7 @@ namespace Choicy
 			this.lblChoicy.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblChoicy.Location = new System.Drawing.Point(8, 15);
 			this.lblChoicy.Name = "lblChoicy";
-			this.lblChoicy.Size = new System.Drawing.Size(260, 23);
+			this.lblChoicy.Size = new System.Drawing.Size(369, 23);
 			this.lblChoicy.TabIndex = 1;
 			this.lblChoicy.Text = "Choicy";
 			this.lblChoicy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -175,30 +205,41 @@ namespace Choicy
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.lblCopyright.Location = new System.Drawing.Point(8, 104);
 			this.lblCopyright.Name = "lblCopyright";
-			this.lblCopyright.Size = new System.Drawing.Size(260, 30);
+			this.lblCopyright.Size = new System.Drawing.Size(369, 30);
 			this.lblCopyright.TabIndex = 0;
 			this.lblCopyright.Text = "Copyright 2016 Sistar21";
 			this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// statusStrip1
+			// ssChoicy
 			// 
-			this.statusStrip1.Location = new System.Drawing.Point(0, 240);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(284, 22);
-			this.statusStrip1.TabIndex = 1;
-			this.statusStrip1.Text = "statusStrip1";
+			this.ssChoicy.Location = new System.Drawing.Point(0, 240);
+			this.ssChoicy.Name = "ssChoicy";
+			this.ssChoicy.Size = new System.Drawing.Size(393, 22);
+			this.ssChoicy.TabIndex = 1;
+			this.ssChoicy.Text = "statusStrip1";
+			// 
+			// sfdChoicy
+			// 
+			this.sfdChoicy.DefaultExt = "choicy";
+			this.sfdChoicy.Filter = "Choicy Lists|*.choicy";
+			// 
+			// ofdChoicy
+			// 
+			this.ofdChoicy.DefaultExt = "choicy";
+			this.ofdChoicy.Filter = "Choicy Lists|*.choicy";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(284, 262);
-			this.Controls.Add(this.statusStrip1);
+			this.ClientSize = new System.Drawing.Size(393, 262);
+			this.Controls.Add(this.ssChoicy);
 			this.Controls.Add(this.tcChoicy);
 			this.Name = "MainForm";
 			this.Text = "Choicy";
 			this.tcChoicy.ResumeLayout(false);
 			this.tpText.ResumeLayout(false);
+			this.tpIntructions.ResumeLayout(false);
 			this.tpAbout.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
