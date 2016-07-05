@@ -29,6 +29,7 @@ namespace Choicy
 		private System.Windows.Forms.Button btnSave;
 		private System.Windows.Forms.SaveFileDialog sfdChoicy;
 		private System.Windows.Forms.OpenFileDialog ofdChoicy;
+		private System.Windows.Forms.ImageList ilChoicy;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -51,12 +52,13 @@ namespace Choicy
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tcChoicy = new System.Windows.Forms.TabControl();
 			this.tpText = new System.Windows.Forms.TabPage();
 			this.btnOpen = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.rtbSelectionText = new System.Windows.Forms.RichTextBox();
-			this.btnChoose = new System.Windows.Forms.Button();
 			this.tpIntructions = new System.Windows.Forms.TabPage();
 			this.rtbInstructions = new System.Windows.Forms.RichTextBox();
 			this.tpAbout = new System.Windows.Forms.TabPage();
@@ -66,6 +68,8 @@ namespace Choicy
 			this.ssChoicy = new System.Windows.Forms.StatusStrip();
 			this.sfdChoicy = new System.Windows.Forms.SaveFileDialog();
 			this.ofdChoicy = new System.Windows.Forms.OpenFileDialog();
+			this.ilChoicy = new System.Windows.Forms.ImageList(this.components);
+			this.btnChoose = new System.Windows.Forms.Button();
 			this.tcChoicy.SuspendLayout();
 			this.tpText.SuspendLayout();
 			this.tpIntructions.SuspendLayout();
@@ -81,7 +85,7 @@ namespace Choicy
 			this.tcChoicy.Location = new System.Drawing.Point(0, 0);
 			this.tcChoicy.Name = "tcChoicy";
 			this.tcChoicy.SelectedIndex = 0;
-			this.tcChoicy.Size = new System.Drawing.Size(393, 262);
+			this.tcChoicy.Size = new System.Drawing.Size(391, 258);
 			this.tcChoicy.TabIndex = 0;
 			// 
 			// tpText
@@ -93,28 +97,34 @@ namespace Choicy
 			this.tpText.Location = new System.Drawing.Point(4, 22);
 			this.tpText.Name = "tpText";
 			this.tpText.Padding = new System.Windows.Forms.Padding(3);
-			this.tpText.Size = new System.Drawing.Size(385, 236);
+			this.tpText.Size = new System.Drawing.Size(383, 232);
 			this.tpText.TabIndex = 0;
 			this.tpText.Text = "Text";
 			this.tpText.UseVisualStyleBackColor = true;
 			// 
 			// btnOpen
 			// 
-			this.btnOpen.Location = new System.Drawing.Point(221, 6);
+			this.btnOpen.ImageKey = "Open";
+			this.btnOpen.ImageList = this.ilChoicy;
+			this.btnOpen.Location = new System.Drawing.Point(251, 6);
 			this.btnOpen.Name = "btnOpen";
-			this.btnOpen.Size = new System.Drawing.Size(75, 23);
+			this.btnOpen.Size = new System.Drawing.Size(60, 58);
 			this.btnOpen.TabIndex = 3;
 			this.btnOpen.Text = "Open";
+			this.btnOpen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.btnOpen.UseVisualStyleBackColor = true;
 			this.btnOpen.Click += new System.EventHandler(this.BtnOpenClick);
 			// 
 			// btnSave
 			// 
-			this.btnSave.Location = new System.Drawing.Point(302, 6);
+			this.btnSave.ImageKey = "Save";
+			this.btnSave.ImageList = this.ilChoicy;
+			this.btnSave.Location = new System.Drawing.Point(317, 6);
 			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(75, 23);
+			this.btnSave.Size = new System.Drawing.Size(60, 58);
 			this.btnSave.TabIndex = 2;
 			this.btnSave.Text = "Save";
+			this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.btnSave.UseVisualStyleBackColor = true;
 			this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
 			// 
@@ -123,24 +133,14 @@ namespace Choicy
 			this.rtbSelectionText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.rtbSelectionText.Location = new System.Drawing.Point(8, 35);
+			this.rtbSelectionText.Location = new System.Drawing.Point(8, 70);
 			this.rtbSelectionText.Name = "rtbSelectionText";
-			this.rtbSelectionText.Size = new System.Drawing.Size(369, 180);
+			this.rtbSelectionText.Size = new System.Drawing.Size(367, 141);
 			this.rtbSelectionText.TabIndex = 1;
 			this.rtbSelectionText.Text = "Write the title here, your choices below the title and click \"Choose\".\n\nPizza\nBur" +
 	"ger\nChicken\nSushi\nPhad Thai\nSalad\nIce cream";
 			this.rtbSelectionText.WordWrap = false;
 			this.rtbSelectionText.TextChanged += new System.EventHandler(this.RtbSelectionTextTextChanged);
-			// 
-			// btnChoose
-			// 
-			this.btnChoose.Location = new System.Drawing.Point(8, 6);
-			this.btnChoose.Name = "btnChoose";
-			this.btnChoose.Size = new System.Drawing.Size(75, 23);
-			this.btnChoose.TabIndex = 0;
-			this.btnChoose.Text = "Choose";
-			this.btnChoose.UseVisualStyleBackColor = true;
-			this.btnChoose.Click += new System.EventHandler(this.BtnChooseClick);
 			// 
 			// tpIntructions
 			// 
@@ -212,9 +212,9 @@ namespace Choicy
 			// 
 			// ssChoicy
 			// 
-			this.ssChoicy.Location = new System.Drawing.Point(0, 240);
+			this.ssChoicy.Location = new System.Drawing.Point(0, 236);
 			this.ssChoicy.Name = "ssChoicy";
-			this.ssChoicy.Size = new System.Drawing.Size(393, 22);
+			this.ssChoicy.Size = new System.Drawing.Size(391, 22);
 			this.ssChoicy.TabIndex = 1;
 			this.ssChoicy.Text = "statusStrip1";
 			// 
@@ -228,11 +228,32 @@ namespace Choicy
 			this.ofdChoicy.DefaultExt = "choicy";
 			this.ofdChoicy.Filter = "Choicy Lists|*.choicy";
 			// 
+			// ilChoicy
+			// 
+			this.ilChoicy.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilChoicy.ImageStream")));
+			this.ilChoicy.TransparentColor = System.Drawing.Color.White;
+			this.ilChoicy.Images.SetKeyName(0, "Choose");
+			this.ilChoicy.Images.SetKeyName(1, "Save");
+			this.ilChoicy.Images.SetKeyName(2, "Open");
+			// 
+			// btnChoose
+			// 
+			this.btnChoose.ImageKey = "Choose";
+			this.btnChoose.ImageList = this.ilChoicy;
+			this.btnChoose.Location = new System.Drawing.Point(8, 6);
+			this.btnChoose.Name = "btnChoose";
+			this.btnChoose.Size = new System.Drawing.Size(60, 58);
+			this.btnChoose.TabIndex = 0;
+			this.btnChoose.Text = "Choose";
+			this.btnChoose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.btnChoose.UseVisualStyleBackColor = true;
+			this.btnChoose.Click += new System.EventHandler(this.BtnChooseClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(393, 262);
+			this.ClientSize = new System.Drawing.Size(391, 258);
 			this.Controls.Add(this.ssChoicy);
 			this.Controls.Add(this.tcChoicy);
 			this.Name = "MainForm";
