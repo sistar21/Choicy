@@ -1,3 +1,7 @@
+# Temp stuff
+_book
+cover design
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -21,6 +25,13 @@ $RECYCLE.BIN/
 # OSX
 # =========================
 
+# Movie File Merger
+Movie File Merger
+Manuals
+Installation Folder
+.project
+Thumbs.db
+
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -35,20 +46,12 @@ Icon
 .Spotlight-V100
 .Trashes
 
-# Temp Files
-.csv
-.slv
-desktop.ini
-
-# Compile Directories
-bin
-obj
-Images
-
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-/.project
+
+/MediaInfo_GUI_0.7.75_Windows.exe
+/teracopy.exe
