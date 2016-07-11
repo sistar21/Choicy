@@ -32,6 +32,7 @@ namespace Choicy
 		private System.Windows.Forms.Label lblLastChecked;
 		private System.Windows.Forms.Button btnCheckVersion;
 		private System.Windows.Forms.WebBrowser wbInstructions;
+		private System.Windows.Forms.Timer tmrChoicy;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -64,6 +65,7 @@ namespace Choicy
 			this.rtbSelectionText = new System.Windows.Forms.RichTextBox();
 			this.btnChoose = new System.Windows.Forms.Button();
 			this.tpIntructions = new System.Windows.Forms.TabPage();
+			this.wbInstructions = new System.Windows.Forms.WebBrowser();
 			this.tpAbout = new System.Windows.Forms.TabPage();
 			this.btnCheckVersion = new System.Windows.Forms.Button();
 			this.lblLastChecked = new System.Windows.Forms.Label();
@@ -73,7 +75,7 @@ namespace Choicy
 			this.lblCopyright = new System.Windows.Forms.Label();
 			this.sfdChoicy = new System.Windows.Forms.SaveFileDialog();
 			this.ofdChoicy = new System.Windows.Forms.OpenFileDialog();
-			this.wbInstructions = new System.Windows.Forms.WebBrowser();
+			this.tmrChoicy = new System.Windows.Forms.Timer(this.components);
 			this.tcChoicy.SuspendLayout();
 			this.tpText.SuspendLayout();
 			this.tpIntructions.SuspendLayout();
@@ -178,6 +180,16 @@ namespace Choicy
 			this.tpIntructions.Text = "Intructions";
 			this.tpIntructions.UseVisualStyleBackColor = true;
 			// 
+			// wbInstructions
+			// 
+			this.wbInstructions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.wbInstructions.Location = new System.Drawing.Point(0, 0);
+			this.wbInstructions.MinimumSize = new System.Drawing.Size(20, 20);
+			this.wbInstructions.Name = "wbInstructions";
+			this.wbInstructions.Size = new System.Drawing.Size(343, 232);
+			this.wbInstructions.TabIndex = 0;
+			this.wbInstructions.Url = new System.Uri("https://sistar21.github.io/Choicy/instructions.html", System.UriKind.Absolute);
+			// 
 			// tpAbout
 			// 
 			this.tpAbout.Controls.Add(this.btnCheckVersion);
@@ -272,15 +284,9 @@ namespace Choicy
 			this.ofdChoicy.DefaultExt = "choicy";
 			this.ofdChoicy.Filter = "Choicy Lists|*.choicy";
 			// 
-			// wbInstructions
+			// tmrChoicy
 			// 
-			this.wbInstructions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.wbInstructions.Location = new System.Drawing.Point(0, 0);
-			this.wbInstructions.MinimumSize = new System.Drawing.Size(20, 20);
-			this.wbInstructions.Name = "wbInstructions";
-			this.wbInstructions.Size = new System.Drawing.Size(343, 232);
-			this.wbInstructions.TabIndex = 0;
-			this.wbInstructions.Url = new System.Uri("https://sistar21.github.io/Choicy/instructions.html", System.UriKind.Absolute);
+			this.tmrChoicy.Tick += new System.EventHandler(this.TmrChoicyTick);
 			// 
 			// MainForm
 			// 

@@ -20,7 +20,9 @@ namespace Choicy
 	public partial class MainForm : Form
 	{
 		int iRandomLine = 0;
+		int iChoiceCounter = 0;
         string strXmlSettingsFilePath = "Choicy Settings.xml";
+		Random rndThis = new Random( );
 		
 		public MainForm()
 		{
@@ -266,7 +268,6 @@ namespace Choicy
 		{
 			ResetSelectionText ( );
 
-			var rndThis = new Random( );
 			int iFirstCharIndex = 0;
 			string strChoosenLineText = "";
 			
@@ -286,7 +287,8 @@ namespace Choicy
 		void BtnChooseClick(object sender, EventArgs e)
 		{
 			if ( !CheckInput() ) return;
-			ChooseNewLine ( );
+			iChoiceCounter = 50;
+			tmrChoicy.Enabled = true;
 		}
 		
 		void BtnOpenClick(object sender, EventArgs e)
@@ -304,17 +306,25 @@ namespace Choicy
 				rtbSelectionText.SaveFile ( sfdChoicy.FileName );
 			}
 		}
+		
 		void BtnCheckVersionClick(object sender, EventArgs e)
 		{
 			CheckLatestVersion ("Now");
 		}
+		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
 		{
 			SaveSettings ();
 		}
-		void RtbInstructionsTextChanged(object sender, EventArgs e)
+		void TmrChoicyTick(object sender, EventArgs e)
 		{
-	
+			if ( iChoiceCounter > 0 ) {
+				ChooseNewLine ( );
+				iChoiceCounter--;
+			}
+			else {
+				tmrChoicy.Enabled = false;
+			}
 		}
 	}
 }
