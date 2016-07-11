@@ -205,7 +205,7 @@ namespace Choicy
 			// 
 			this.lblLastChecked.Location = new System.Drawing.Point(168, 163);
 			this.lblLastChecked.Name = "lblLastChecked";
-			this.lblLastChecked.Size = new System.Drawing.Size(130, 23);
+			this.lblLastChecked.Size = new System.Drawing.Size(167, 23);
 			this.lblLastChecked.TabIndex = 4;
 			this.lblLastChecked.Text = "Last Checked: Never";
 			// 

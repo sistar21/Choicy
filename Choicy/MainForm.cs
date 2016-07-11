@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
+using System.IO;
 
 namespace Choicy
 {
@@ -19,12 +20,14 @@ namespace Choicy
 	public partial class MainForm : Form
 	{
 		int iRandomLine = 0;
+        string strXmlSettingsFilePath = "Choicy Settings.xml";
 		
 		public MainForm()
 		{
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			InitializeComponent();
 			
+			LoadSettings( false );
 			CheckLatestVersion( "Startup" );		
 		}
 
@@ -99,25 +102,6 @@ namespace Choicy
         }
 
         /// <summary>
-        /// Read the setting of one XML element
-        /// </summary>
-        /// <param name="doc">The XML Document to read from.</param>
-        /// <param name="sSettingName">The XML element name.</param>
-        /// <param name="sDefault">The default value if the setting is not found.</param>
-        /// <returns>The setting as string, if found, otherwise the default value.</returns>
-        string readXmlSetting( XmlDocument doc, string sSettingName, string sDefault )
-        {
-            string sText = "";
-            XmlNode node = doc.DocumentElement.SelectSingleNode( sSettingName );
-            if ( node == null ) sText = sDefault;
-            else {
-                sText = node.InnerText;
-                if ( sText == null ) sText = sDefault;
-            }
-            return sText;
-        }
-       
-        /// <summary>
         /// Check if the latest version of Choicy is installed.
         /// </summary>
         void CheckLatestVersion( string sWhen )
@@ -147,7 +131,7 @@ namespace Choicy
                 var xmlLatestVersion = new XmlDocument( );
                 try {
                     xmlLatestVersion.Load( @"https://sistar21.github.io/Choicy/ChoicyVersion.xml" );
-                    sLatestRelease = readXmlSetting( xmlLatestVersion, "/ChociyVersions/LatestRelease", "0.0.0" );
+                    sLatestRelease = readXmlSetting( xmlLatestVersion, "/ChoicyVersions/LatestRelease", "0.0.0" );
                     sReleaseNotes = readXmlSetting( xmlLatestVersion, "/ChoicyVersions/ReleaseNotes", "Sorry, did not find any release notes..." );
                     if ( sReleaseNotes == "Sorry, did not find any release notes..." ) {
                         if ( ShowYesNoQuestion( "Sorry, did not find any release notes...\n" +
@@ -176,6 +160,72 @@ namespace Choicy
         }
 		
 #endregion Version Handling
+
+#region Settings
+
+        /// <summary>
+        /// Read the setting of one XML element
+        /// </summary>
+        /// <param name="doc">The XML Document to read from.</param>
+        /// <param name="sSettingName">The XML element name.</param>
+        /// <param name="sDefault">The default value if the setting is not found.</param>
+        /// <returns>The setting as string, if found, otherwise the default value.</returns>
+        string readXmlSetting( XmlDocument doc, string sSettingName, string sDefault )
+        {
+            string sText = "";
+            XmlNode node = doc.DocumentElement.SelectSingleNode( sSettingName );
+            if ( node == null ) sText = sDefault;
+            else {
+                sText = node.InnerText;
+                if ( sText == null ) sText = sDefault;
+            }
+            return sText;
+        }
+
+        /// <summary>
+        /// Loads the XML settings. 
+        /// </summary>
+        void LoadSettings( bool bReset )
+        {
+            if ( !File.Exists( strXmlSettingsFilePath ) || bReset ) {
+                using ( XmlWriter writer = XmlWriter.Create( strXmlSettingsFilePath ) ) // create a dummy
+                {
+                    writer.WriteStartDocument( );
+                    writer.WriteStartElement( "ChoicySettings" );  // root exlement
+                    writer.WriteEndElement( );  // close the root element
+                    writer.WriteEndDocument( );
+                }
+            }
+
+            var xmlSettings = new XmlDocument( );
+            xmlSettings.Load( strXmlSettingsFilePath );
+
+            // General settings			
+            lblLastChecked.Text = readXmlSetting( xmlSettings, "/ChoicySettings/General/LastChecked", "Last Checked: Never" );
+            cobCheckForUpdates.Text = readXmlSetting( xmlSettings, "/ChoicySettings/General/CheckForUpdates", "Check for updates daily." );
+        }
+
+
+        /// <summary>
+        /// Save the XML settings.
+        /// </summary>
+        void SaveSettings( )
+        {
+            using ( XmlWriter writer = XmlWriter.Create( strXmlSettingsFilePath ) ) {
+                writer.WriteStartDocument( );
+                writer.WriteStartElement( "ChoicySettings" );  // root exlement
+
+                writer.WriteStartElement( "General" );  // General settings group
+                writer.WriteElementString( "LastChecked", lblLastChecked.Text );
+                writer.WriteElementString( "CheckForUpdates", cobCheckForUpdates.Text );
+                writer.WriteEndElement( );
+
+                writer.WriteEndElement( );  // close the root element
+                writer.WriteEndDocument( );
+            }
+		}
+
+#endregion Settings
 
 		void ResetSelectionText ( ) 
 		{
