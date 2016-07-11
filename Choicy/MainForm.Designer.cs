@@ -29,6 +29,8 @@ namespace Choicy
 		private System.Windows.Forms.SaveFileDialog sfdChoicy;
 		private System.Windows.Forms.OpenFileDialog ofdChoicy;
 		private System.Windows.Forms.ImageList ilChoicy;
+		private System.Windows.Forms.ComboBox cobCheckForUpdates;
+		private System.Windows.Forms.Label lblLastChecked;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -63,6 +65,8 @@ namespace Choicy
 			this.tpIntructions = new System.Windows.Forms.TabPage();
 			this.rtbInstructions = new System.Windows.Forms.RichTextBox();
 			this.tpAbout = new System.Windows.Forms.TabPage();
+			this.lblLastChecked = new System.Windows.Forms.Label();
+			this.cobCheckForUpdates = new System.Windows.Forms.ComboBox();
 			this.lblVersion = new System.Windows.Forms.Label();
 			this.lblChoicy = new System.Windows.Forms.Label();
 			this.lblCopyright = new System.Windows.Forms.Label();
@@ -184,6 +188,8 @@ namespace Choicy
 			// 
 			// tpAbout
 			// 
+			this.tpAbout.Controls.Add(this.lblLastChecked);
+			this.tpAbout.Controls.Add(this.cobCheckForUpdates);
 			this.tpAbout.Controls.Add(this.lblVersion);
 			this.tpAbout.Controls.Add(this.lblChoicy);
 			this.tpAbout.Controls.Add(this.lblCopyright);
@@ -194,6 +200,26 @@ namespace Choicy
 			this.tpAbout.TabIndex = 1;
 			this.tpAbout.Text = "About";
 			this.tpAbout.UseVisualStyleBackColor = true;
+			// 
+			// lblLastChecked
+			// 
+			this.lblLastChecked.Location = new System.Drawing.Point(168, 163);
+			this.lblLastChecked.Name = "lblLastChecked";
+			this.lblLastChecked.Size = new System.Drawing.Size(130, 23);
+			this.lblLastChecked.TabIndex = 4;
+			this.lblLastChecked.Text = "Last Checked: Never";
+			// 
+			// cobCheckForUpdates
+			// 
+			this.cobCheckForUpdates.FormattingEnabled = true;
+			this.cobCheckForUpdates.Items.AddRange(new object[] {
+			"Check for updates daily.",
+			"Check for updates weekly.",
+			"Check for updates monthly."});
+			this.cobCheckForUpdates.Location = new System.Drawing.Point(9, 163);
+			this.cobCheckForUpdates.Name = "cobCheckForUpdates";
+			this.cobCheckForUpdates.Size = new System.Drawing.Size(121, 21);
+			this.cobCheckForUpdates.TabIndex = 3;
 			// 
 			// lblVersion
 			// 
