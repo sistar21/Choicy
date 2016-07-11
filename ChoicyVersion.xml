@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MFMVersions>
+<ChoicyVersions>
 <LatestRelease>0.2.0</LatestRelease>
 <ReleaseNotes>
 This release improved the choosing and contains variouse other improvements...
@@ -9,4 +9,4 @@ This release improved the choosing and contains variouse other improvements...
 - Made the choosing more amazing.
 - Made variouse minor improvements. 
 </ReleaseNotes>
-</MFMVersions>
+</ChoicyVersions>
