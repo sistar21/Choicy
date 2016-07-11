@@ -304,5 +304,17 @@ namespace Choicy
 				rtbSelectionText.SaveFile ( sfdChoicy.FileName );
 			}
 		}
+		void BtnCheckVersionClick(object sender, EventArgs e)
+		{
+			CheckLatestVersion ("Now");
+		}
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			SaveSettings ();
+		}
+		void RtbInstructionsTextChanged(object sender, EventArgs e)
+		{
+	
+		}
 	}
 }
