@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Choicy
 {
@@ -19,9 +20,10 @@ namespace Choicy
 	/// </summary>
 	public partial class MainForm : Form
 	{
-		int iRandomLine = 0;
+		int iRandomLine = 1;
 		int iChoiceCounter = 0;
         string strXmlSettingsFilePath = "Choicy Settings.xml";
+        string strActiveListName = "Choicy.choicy";
 		Random rndThis = new Random( );
 		
 		public MainForm()
@@ -30,7 +32,9 @@ namespace Choicy
 			InitializeComponent();
 			
 			LoadSettings( false );
-			CheckLatestVersion( "Startup" );		
+			LoadList ( strActiveListName );
+			ResetSelectionText( );
+			CheckLatestVersion( "Startup" );
 		}
 
         /// <summary>
@@ -205,6 +209,7 @@ namespace Choicy
             // General settings			
             lblLastChecked.Text = readXmlSetting( xmlSettings, "/ChoicySettings/General/LastChecked", "Last Checked: Never" );
             cobCheckForUpdates.Text = readXmlSetting( xmlSettings, "/ChoicySettings/General/CheckForUpdates", "Check for updates daily." );
+            strActiveListName = readXmlSetting( xmlSettings, "/ChoicySettings/General/ActiveListName", "Choicy.choicy" );
         }
 
 
@@ -220,6 +225,7 @@ namespace Choicy
                 writer.WriteStartElement( "General" );  // General settings group
                 writer.WriteElementString( "LastChecked", lblLastChecked.Text );
                 writer.WriteElementString( "CheckForUpdates", cobCheckForUpdates.Text );
+                writer.WriteElementString( "ActiveListName", strActiveListName );
                 writer.WriteEndElement( );
 
                 writer.WriteEndElement( );  // close the root element
@@ -229,22 +235,6 @@ namespace Choicy
 
 #endregion Settings
 
-		void ResetSelectionText ( ) 
-		{
-			// reset the whole rich text box to black default font
-			rtbSelectionText.SelectAll();
-			rtbSelectionText.SelectionFont = rtbSelectionText.Font;
-			rtbSelectionText.SelectionColor = Color.Black;
-			
-			// make the first line bold
-			int iFirstCharIndex = rtbSelectionText.GetFirstCharIndexFromLine( 0 );
-			string strChoosenLineText = rtbSelectionText.Lines[0];
-			rtbSelectionText.Select(iFirstCharIndex, strChoosenLineText.Length);
-			rtbSelectionText.SelectionColor = Color.Black;
-			rtbSelectionText.SelectionFont = new Font(rtbSelectionText.Font, rtbSelectionText.Font.Style | FontStyle.Bold);
-			rtbSelectionText.Update();
-		}
-		
 		bool CheckInput()
 		{
 			if (rtbSelectionText.Lines.Length < 2 ) {
@@ -258,30 +248,102 @@ namespace Choicy
 			}
 			if ( iChoices < 3 ) {
 				ShowWarning( "There have to be at least two choices in the list.\n" +
-				              "Note that the first line is the title." );
+				              "Note that the first line is the title and empty lines are not counted." );
 				return false;
 			}
 			return true;
 		}
 		
+		void SelectLine ( int iLine ) 
+		{
+			if ( iLine > rtbSelectionText.Lines.Length ) {
+				iLine = rtbSelectionText.Lines.Length;
+			}
+			int iFirstCharIndex = rtbSelectionText.GetFirstCharIndexFromLine( iLine );
+			string strChoosenLineText = rtbSelectionText.Lines[ iLine ];
+			rtbSelectionText.Select( iFirstCharIndex, strChoosenLineText.Length );
+		}
+
+		void ColorStatistics ( int iLine ) 
+		{
+			Regex rgxStatistics = new Regex (@"\[\d+\]$");
+			
+			if ( iLine > rtbSelectionText.Lines.Length ) {
+				iLine = rtbSelectionText.Lines.Length;
+			}
+			
+			string strChoosenLineText = rtbSelectionText.Lines[ iLine ];
+			if ( rgxStatistics.IsMatch( strChoosenLineText ) ) {
+				Match mtch = rgxStatistics.Match( strChoosenLineText );
+				int iFirstCharIndex = rtbSelectionText.GetFirstCharIndexFromLine( iLine ) + mtch.Index;
+				rtbSelectionText.Select( iFirstCharIndex, mtch.Length );
+				rtbSelectionText.SelectionColor = Color.Gray;
+			}
+		}
+		
+		void IncreaseStatistics ( int iLine ) 
+		{
+			Regex rgxStatistics = new Regex (@"\[\d+\]$");
+			
+			if ( iLine > rtbSelectionText.Lines.Length ) {
+				iLine = rtbSelectionText.Lines.Length;
+			}
+			
+			string strChoosenLineText = rtbSelectionText.Lines[ iLine ];
+			if ( rgxStatistics.IsMatch( strChoosenLineText ) ) {
+				Match mtch = rgxStatistics.Match( strChoosenLineText );
+				int iStatisticsCount = Convert.ToInt32( Regex.Match( mtch.Value, @"\d+" ).Value );
+				int iFirstCharIndex = rtbSelectionText.GetFirstCharIndexFromLine( iLine ) + mtch.Index;
+				rtbSelectionText.Select( iFirstCharIndex, mtch.Length );
+				iStatisticsCount++;
+				rtbSelectionText.SelectedText = "[" + iStatisticsCount + "]";
+			}
+			else {
+				SelectLine ( iLine );
+				rtbSelectionText.SelectedText = strChoosenLineText + " [1]";
+			}
+			ColorStatistics ( iLine );
+		}
+		
+		void ResetSelectionText ( ) 
+		{
+			// reset the whole rich text box to black default font
+			for ( int iLineNumber = 0;  iLineNumber < rtbSelectionText.Lines.Length; iLineNumber++ ) {
+				ResetLine ( iLineNumber );
+			}
+			
+			// make the first line bold
+			SelectLine ( 0 );
+			rtbSelectionText.SelectionFont = new Font(rtbSelectionText.Font, rtbSelectionText.Font.Style | FontStyle.Bold);
+			rtbSelectionText.Update();
+		}
+		
+		void ResetLine ( int iLine )
+		{
+			SelectLine ( iLine );
+			rtbSelectionText.SelectionColor = Color.Black;
+			rtbSelectionText.SelectionFont = new Font(rtbSelectionText.Font, rtbSelectionText.Font.Style );
+			ColorStatistics ( iLine );
+			rtbSelectionText.Update();
+		}
+		
 		void ChooseNewLine ( )
 		{
-			ResetSelectionText ( );
+			int iLastLine = iRandomLine;
+			ResetLine ( iLastLine );
 
-			int iFirstCharIndex = 0;
-			string strChoosenLineText = "";
-			
 			// get a new random line
-			while ( strChoosenLineText.Length == 0 ) {
+			iRandomLine = 1;
+			do {
 				iRandomLine = rndThis.Next( 1, rtbSelectionText.Lines.Length );
-				iFirstCharIndex = rtbSelectionText.GetFirstCharIndexFromLine( iRandomLine );
-				strChoosenLineText = rtbSelectionText.Lines[iRandomLine];
-			}
+			} 
+			while ( rtbSelectionText.Lines[ iRandomLine ].Length == 0 && iLastLine != iRandomLine );
 
 			// make the new random line green
-			rtbSelectionText.Select(iFirstCharIndex, strChoosenLineText.Length);
+			SelectLine ( iRandomLine );
 			rtbSelectionText.SelectionColor = Color.Green;
 			rtbSelectionText.SelectionFont = new Font(rtbSelectionText.Font, rtbSelectionText.Font.Style | FontStyle.Bold);
+			ColorStatistics ( iRandomLine );
 		}
 		
 		void BtnChooseClick(object sender, EventArgs e)
@@ -291,19 +353,29 @@ namespace Choicy
 			tmrChoicy.Enabled = true;
 		}
 		
+		void LoadList ( string strListName )
+		{
+			if ( File.Exists ( strListName ) ) 
+			{
+				rtbSelectionText.LoadFile ( strListName );
+				ResetSelectionText();
+				strActiveListName = strListName;
+			}
+		}
+		
 		void BtnOpenClick(object sender, EventArgs e)
 		{
 			if ( ofdChoicy.ShowDialog() == DialogResult.OK ) {	
-				rtbSelectionText.LoadFile ( ofdChoicy.FileName );
-				ResetSelectionText();
-				sfdChoicy.FileName = ofdChoicy.FileName;
+				LoadList ( ofdChoicy.FileName );
 			}
 		}
 		
 		void BtnSaveClick(object sender, EventArgs e)
 		{
+			sfdChoicy.FileName = strActiveListName;
 			if ( sfdChoicy.ShowDialog() == DialogResult.OK ) {
 				rtbSelectionText.SaveFile ( sfdChoicy.FileName );
+				strActiveListName = sfdChoicy.FileName;
 			}
 		}
 		
@@ -316,6 +388,7 @@ namespace Choicy
 		{
 			SaveSettings ();
 		}
+		
 		void TmrChoicyTick(object sender, EventArgs e)
 		{
 			if ( iChoiceCounter > 0 ) {
@@ -324,7 +397,17 @@ namespace Choicy
 			}
 			else {
 				tmrChoicy.Enabled = false;
+				IncreaseStatistics ( iRandomLine );
+				IncreaseStatistics ( 0 );
 			}
+		}
+		void WbInstructionsDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+		{
+			/*
+			dynamic htmldoc = wbInstructions.Document.DomDocument as dynamic;
+	        dynamic nodelist = htmldoc.getElementByClassName ("navbar-wrapper") as dynamic;
+	        nodelist.removeChild(nodelist);
+	        */
 		}
 	}
 }

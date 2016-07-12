@@ -189,6 +189,7 @@ namespace Choicy
 			this.wbInstructions.Size = new System.Drawing.Size(343, 232);
 			this.wbInstructions.TabIndex = 0;
 			this.wbInstructions.Url = new System.Uri("https://sistar21.github.io/Choicy/instructions.html", System.UriKind.Absolute);
+			this.wbInstructions.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WbInstructionsDocumentCompleted);
 			// 
 			// tpAbout
 			// 
