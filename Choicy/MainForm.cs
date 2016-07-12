@@ -24,7 +24,7 @@ namespace Choicy
 		int iChoiceCounter = 0;
         string strXmlSettingsFilePath = "Choicy Settings.xml";
         string strActiveListName = "Choicy.choicy";
-		Random rndThis = new Random( );
+		Random rndChoicy = new Random( );
 		
 		public MainForm()
 		{
@@ -335,7 +335,7 @@ namespace Choicy
 			// get a new random line
 			iRandomLine = 1;
 			do {
-				iRandomLine = rndThis.Next( 1, rtbSelectionText.Lines.Length );
+				iRandomLine = rndChoicy.Next( 1, rtbSelectionText.Lines.Length );
 			} 
 			while ( rtbSelectionText.Lines[ iRandomLine ].Length == 0 && iLastLine != iRandomLine );
 
@@ -344,6 +344,7 @@ namespace Choicy
 			rtbSelectionText.SelectionColor = Color.Green;
 			rtbSelectionText.SelectionFont = new Font(rtbSelectionText.Font, rtbSelectionText.Font.Style | FontStyle.Bold);
 			ColorStatistics ( iRandomLine );
+			rtbSelectionText.ScrollToCaret();
 		}
 		
 		void BtnChooseClick(object sender, EventArgs e)
@@ -366,16 +367,22 @@ namespace Choicy
 		void BtnOpenClick(object sender, EventArgs e)
 		{
 			if ( ofdChoicy.ShowDialog() == DialogResult.OK ) {	
+				SaveList ( strActiveListName );
 				LoadList ( ofdChoicy.FileName );
 			}
+		}
+		
+		void SaveList ( string strListName ) 
+		{
+			rtbSelectionText.SaveFile ( strListName );
+			strActiveListName = strListName;
 		}
 		
 		void BtnSaveClick(object sender, EventArgs e)
 		{
 			sfdChoicy.FileName = strActiveListName;
 			if ( sfdChoicy.ShowDialog() == DialogResult.OK ) {
-				rtbSelectionText.SaveFile ( sfdChoicy.FileName );
-				strActiveListName = sfdChoicy.FileName;
+				SaveList ( sfdChoicy.FileName );
 			}
 		}
 		
@@ -387,6 +394,7 @@ namespace Choicy
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
 		{
 			SaveSettings ();
+			SaveList ( strActiveListName );
 		}
 		
 		void TmrChoicyTick(object sender, EventArgs e)
@@ -401,6 +409,7 @@ namespace Choicy
 				IncreaseStatistics ( 0 );
 			}
 		}
+
 		void WbInstructionsDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
 			/*
@@ -408,6 +417,16 @@ namespace Choicy
 	        dynamic nodelist = htmldoc.getElementByClassName ("navbar-wrapper") as dynamic;
 	        nodelist.removeChild(nodelist);
 	        */
+		}
+		
+		void PbDonationClick(object sender, EventArgs e)
+		{
+			ExecuteThis ( "https://sistar21.github.io/Choicy/donations.html" );
+		}
+
+		void PbHomeClick(object sender, EventArgs e)
+		{
+			ExecuteThis ( "https://sistar21.github.io/Choicy/index.html" );
 		}
 	}
 }
