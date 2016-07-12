@@ -34,6 +34,7 @@ namespace Choicy
 		private System.Windows.Forms.WebBrowser wbInstructions;
 		private System.Windows.Forms.Timer tmrChoicy;
 		private System.Windows.Forms.PictureBox pbChoicy;
+		private System.Windows.Forms.ToolTip ttChoicy;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -78,6 +79,7 @@ namespace Choicy
 			this.sfdChoicy = new System.Windows.Forms.SaveFileDialog();
 			this.ofdChoicy = new System.Windows.Forms.OpenFileDialog();
 			this.tmrChoicy = new System.Windows.Forms.Timer(this.components);
+			this.ttChoicy = new System.Windows.Forms.ToolTip(this.components);
 			this.tcChoicy.SuspendLayout();
 			this.tpText.SuspendLayout();
 			this.tpIntructions.SuspendLayout();
@@ -106,7 +108,7 @@ namespace Choicy
 			this.tpText.Location = new System.Drawing.Point(4, 22);
 			this.tpText.Name = "tpText";
 			this.tpText.Padding = new System.Windows.Forms.Padding(3);
-			this.tpText.Size = new System.Drawing.Size(342, 277);
+			this.tpText.Size = new System.Drawing.Size(343, 260);
 			this.tpText.TabIndex = 0;
 			this.tpText.Text = "Text";
 			this.tpText.UseVisualStyleBackColor = true;
@@ -116,12 +118,13 @@ namespace Choicy
 			this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOpen.ImageKey = "Open";
 			this.btnOpen.ImageList = this.ilChoicy;
-			this.btnOpen.Location = new System.Drawing.Point(210, 6);
+			this.btnOpen.Location = new System.Drawing.Point(211, 6);
 			this.btnOpen.Name = "btnOpen";
 			this.btnOpen.Size = new System.Drawing.Size(60, 58);
 			this.btnOpen.TabIndex = 3;
 			this.btnOpen.Text = "Open";
 			this.btnOpen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.ttChoicy.SetToolTip(this.btnOpen, "Open a saved list of choices.");
 			this.btnOpen.UseVisualStyleBackColor = true;
 			this.btnOpen.Click += new System.EventHandler(this.BtnOpenClick);
 			// 
@@ -138,12 +141,13 @@ namespace Choicy
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSave.ImageKey = "Save";
 			this.btnSave.ImageList = this.ilChoicy;
-			this.btnSave.Location = new System.Drawing.Point(276, 6);
+			this.btnSave.Location = new System.Drawing.Point(277, 6);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(60, 58);
 			this.btnSave.TabIndex = 2;
 			this.btnSave.Text = "Save";
 			this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.ttChoicy.SetToolTip(this.btnSave, "Save the current list of choices.");
 			this.btnSave.UseVisualStyleBackColor = true;
 			this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
 			// 
@@ -154,10 +158,11 @@ namespace Choicy
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.rtbSelectionText.Location = new System.Drawing.Point(8, 70);
 			this.rtbSelectionText.Name = "rtbSelectionText";
-			this.rtbSelectionText.Size = new System.Drawing.Size(326, 201);
+			this.rtbSelectionText.Size = new System.Drawing.Size(327, 184);
 			this.rtbSelectionText.TabIndex = 1;
 			this.rtbSelectionText.Text = "Write the title here, your choices below the title and click \"Choose\".\n\nPizza\nBur" +
 	"ger\nChicken\nSushi\nPhad Thai\nSalad\nIce cream";
+			this.ttChoicy.SetToolTip(this.rtbSelectionText, "Edit the list as you wish to customize it to your choices.");
 			this.rtbSelectionText.WordWrap = false;
 			// 
 			// btnChoose
@@ -170,6 +175,7 @@ namespace Choicy
 			this.btnChoose.TabIndex = 0;
 			this.btnChoose.Text = "Choose";
 			this.btnChoose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.ttChoicy.SetToolTip(this.btnChoose, "Make a new choice.");
 			this.btnChoose.UseVisualStyleBackColor = true;
 			this.btnChoose.Click += new System.EventHandler(this.BtnChooseClick);
 			// 
@@ -178,7 +184,7 @@ namespace Choicy
 			this.tpIntructions.Controls.Add(this.wbInstructions);
 			this.tpIntructions.Location = new System.Drawing.Point(4, 22);
 			this.tpIntructions.Name = "tpIntructions";
-			this.tpIntructions.Size = new System.Drawing.Size(342, 277);
+			this.tpIntructions.Size = new System.Drawing.Size(343, 260);
 			this.tpIntructions.TabIndex = 2;
 			this.tpIntructions.Text = "Intructions";
 			this.tpIntructions.UseVisualStyleBackColor = true;
@@ -189,7 +195,7 @@ namespace Choicy
 			this.wbInstructions.Location = new System.Drawing.Point(0, 0);
 			this.wbInstructions.MinimumSize = new System.Drawing.Size(20, 20);
 			this.wbInstructions.Name = "wbInstructions";
-			this.wbInstructions.Size = new System.Drawing.Size(342, 277);
+			this.wbInstructions.Size = new System.Drawing.Size(343, 260);
 			this.wbInstructions.TabIndex = 0;
 			this.wbInstructions.Url = new System.Uri("https://sistar21.github.io/Choicy/instructions.html", System.UriKind.Absolute);
 			this.wbInstructions.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WbInstructionsDocumentCompleted);
@@ -232,6 +238,7 @@ namespace Choicy
 			this.btnCheckVersion.Size = new System.Drawing.Size(158, 23);
 			this.btnCheckVersion.TabIndex = 5;
 			this.btnCheckVersion.Text = "Check Version Now";
+			this.ttChoicy.SetToolTip(this.btnCheckVersion, "Check if your version is up to date.");
 			this.btnCheckVersion.UseVisualStyleBackColor = true;
 			this.btnCheckVersion.Click += new System.EventHandler(this.BtnCheckVersionClick);
 			// 
@@ -257,6 +264,7 @@ namespace Choicy
 			this.cobCheckForUpdates.Name = "cobCheckForUpdates";
 			this.cobCheckForUpdates.Size = new System.Drawing.Size(156, 21);
 			this.cobCheckForUpdates.TabIndex = 3;
+			this.ttChoicy.SetToolTip(this.cobCheckForUpdates, "Select the frequency of new version checks.");
 			// 
 			// lblVersion
 			// 
