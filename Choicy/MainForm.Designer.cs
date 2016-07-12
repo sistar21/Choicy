@@ -33,6 +33,7 @@ namespace Choicy
 		private System.Windows.Forms.Button btnCheckVersion;
 		private System.Windows.Forms.WebBrowser wbInstructions;
 		private System.Windows.Forms.Timer tmrChoicy;
+		private System.Windows.Forms.PictureBox pbChoicy;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -67,6 +68,7 @@ namespace Choicy
 			this.tpIntructions = new System.Windows.Forms.TabPage();
 			this.wbInstructions = new System.Windows.Forms.WebBrowser();
 			this.tpAbout = new System.Windows.Forms.TabPage();
+			this.pbChoicy = new System.Windows.Forms.PictureBox();
 			this.btnCheckVersion = new System.Windows.Forms.Button();
 			this.lblLastChecked = new System.Windows.Forms.Label();
 			this.cobCheckForUpdates = new System.Windows.Forms.ComboBox();
@@ -80,6 +82,7 @@ namespace Choicy
 			this.tpText.SuspendLayout();
 			this.tpIntructions.SuspendLayout();
 			this.tpAbout.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pbChoicy)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tcChoicy
@@ -91,7 +94,7 @@ namespace Choicy
 			this.tcChoicy.Location = new System.Drawing.Point(0, 0);
 			this.tcChoicy.Name = "tcChoicy";
 			this.tcChoicy.SelectedIndex = 0;
-			this.tcChoicy.Size = new System.Drawing.Size(351, 258);
+			this.tcChoicy.Size = new System.Drawing.Size(351, 286);
 			this.tcChoicy.TabIndex = 0;
 			// 
 			// tpText
@@ -103,7 +106,7 @@ namespace Choicy
 			this.tpText.Location = new System.Drawing.Point(4, 22);
 			this.tpText.Name = "tpText";
 			this.tpText.Padding = new System.Windows.Forms.Padding(3);
-			this.tpText.Size = new System.Drawing.Size(343, 232);
+			this.tpText.Size = new System.Drawing.Size(342, 277);
 			this.tpText.TabIndex = 0;
 			this.tpText.Text = "Text";
 			this.tpText.UseVisualStyleBackColor = true;
@@ -113,7 +116,7 @@ namespace Choicy
 			this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOpen.ImageKey = "Open";
 			this.btnOpen.ImageList = this.ilChoicy;
-			this.btnOpen.Location = new System.Drawing.Point(211, 6);
+			this.btnOpen.Location = new System.Drawing.Point(210, 6);
 			this.btnOpen.Name = "btnOpen";
 			this.btnOpen.Size = new System.Drawing.Size(60, 58);
 			this.btnOpen.TabIndex = 3;
@@ -135,7 +138,7 @@ namespace Choicy
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSave.ImageKey = "Save";
 			this.btnSave.ImageList = this.ilChoicy;
-			this.btnSave.Location = new System.Drawing.Point(277, 6);
+			this.btnSave.Location = new System.Drawing.Point(276, 6);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(60, 58);
 			this.btnSave.TabIndex = 2;
@@ -151,7 +154,7 @@ namespace Choicy
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.rtbSelectionText.Location = new System.Drawing.Point(8, 70);
 			this.rtbSelectionText.Name = "rtbSelectionText";
-			this.rtbSelectionText.Size = new System.Drawing.Size(327, 156);
+			this.rtbSelectionText.Size = new System.Drawing.Size(326, 201);
 			this.rtbSelectionText.TabIndex = 1;
 			this.rtbSelectionText.Text = "Write the title here, your choices below the title and click \"Choose\".\n\nPizza\nBur" +
 	"ger\nChicken\nSushi\nPhad Thai\nSalad\nIce cream";
@@ -175,7 +178,7 @@ namespace Choicy
 			this.tpIntructions.Controls.Add(this.wbInstructions);
 			this.tpIntructions.Location = new System.Drawing.Point(4, 22);
 			this.tpIntructions.Name = "tpIntructions";
-			this.tpIntructions.Size = new System.Drawing.Size(343, 232);
+			this.tpIntructions.Size = new System.Drawing.Size(342, 277);
 			this.tpIntructions.TabIndex = 2;
 			this.tpIntructions.Text = "Intructions";
 			this.tpIntructions.UseVisualStyleBackColor = true;
@@ -186,13 +189,14 @@ namespace Choicy
 			this.wbInstructions.Location = new System.Drawing.Point(0, 0);
 			this.wbInstructions.MinimumSize = new System.Drawing.Size(20, 20);
 			this.wbInstructions.Name = "wbInstructions";
-			this.wbInstructions.Size = new System.Drawing.Size(343, 232);
+			this.wbInstructions.Size = new System.Drawing.Size(342, 277);
 			this.wbInstructions.TabIndex = 0;
 			this.wbInstructions.Url = new System.Uri("https://sistar21.github.io/Choicy/instructions.html", System.UriKind.Absolute);
 			this.wbInstructions.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WbInstructionsDocumentCompleted);
 			// 
 			// tpAbout
 			// 
+			this.tpAbout.Controls.Add(this.pbChoicy);
 			this.tpAbout.Controls.Add(this.btnCheckVersion);
 			this.tpAbout.Controls.Add(this.lblLastChecked);
 			this.tpAbout.Controls.Add(this.cobCheckForUpdates);
@@ -202,17 +206,30 @@ namespace Choicy
 			this.tpAbout.Location = new System.Drawing.Point(4, 22);
 			this.tpAbout.Name = "tpAbout";
 			this.tpAbout.Padding = new System.Windows.Forms.Padding(3);
-			this.tpAbout.Size = new System.Drawing.Size(343, 232);
+			this.tpAbout.Size = new System.Drawing.Size(343, 260);
 			this.tpAbout.TabIndex = 1;
 			this.tpAbout.Text = "About";
 			this.tpAbout.UseVisualStyleBackColor = true;
 			// 
+			// pbChoicy
+			// 
+			this.pbChoicy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.pbChoicy.Image = ((System.Drawing.Image)(resources.GetObject("pbChoicy.Image")));
+			this.pbChoicy.ImageLocation = "";
+			this.pbChoicy.Location = new System.Drawing.Point(8, 66);
+			this.pbChoicy.Name = "pbChoicy";
+			this.pbChoicy.Size = new System.Drawing.Size(327, 96);
+			this.pbChoicy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.pbChoicy.TabIndex = 6;
+			this.pbChoicy.TabStop = false;
+			// 
 			// btnCheckVersion
 			// 
-			this.btnCheckVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCheckVersion.Location = new System.Drawing.Point(198, 112);
+			this.btnCheckVersion.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.btnCheckVersion.Location = new System.Drawing.Point(177, 201);
 			this.btnCheckVersion.Name = "btnCheckVersion";
-			this.btnCheckVersion.Size = new System.Drawing.Size(137, 23);
+			this.btnCheckVersion.Size = new System.Drawing.Size(158, 23);
 			this.btnCheckVersion.TabIndex = 5;
 			this.btnCheckVersion.Text = "Check Version Now";
 			this.btnCheckVersion.UseVisualStyleBackColor = true;
@@ -220,9 +237,8 @@ namespace Choicy
 			// 
 			// lblLastChecked
 			// 
-			this.lblLastChecked.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lblLastChecked.Location = new System.Drawing.Point(8, 80);
+			this.lblLastChecked.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.lblLastChecked.Location = new System.Drawing.Point(8, 169);
 			this.lblLastChecked.Name = "lblLastChecked";
 			this.lblLastChecked.Size = new System.Drawing.Size(327, 23);
 			this.lblLastChecked.TabIndex = 4;
@@ -231,21 +247,22 @@ namespace Choicy
 			// 
 			// cobCheckForUpdates
 			// 
+			this.cobCheckForUpdates.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.cobCheckForUpdates.FormattingEnabled = true;
 			this.cobCheckForUpdates.Items.AddRange(new object[] {
 			"Check for updates daily.",
 			"Check for updates weekly.",
 			"Check for updates monthly."});
-			this.cobCheckForUpdates.Location = new System.Drawing.Point(8, 112);
+			this.cobCheckForUpdates.Location = new System.Drawing.Point(8, 201);
 			this.cobCheckForUpdates.Name = "cobCheckForUpdates";
-			this.cobCheckForUpdates.Size = new System.Drawing.Size(153, 21);
+			this.cobCheckForUpdates.Size = new System.Drawing.Size(156, 21);
 			this.cobCheckForUpdates.TabIndex = 3;
 			// 
 			// lblVersion
 			// 
 			this.lblVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lblVersion.Location = new System.Drawing.Point(8, 57);
+			this.lblVersion.Location = new System.Drawing.Point(8, 40);
 			this.lblVersion.Name = "lblVersion";
 			this.lblVersion.Size = new System.Drawing.Size(327, 23);
 			this.lblVersion.TabIndex = 2;
@@ -266,9 +283,8 @@ namespace Choicy
 			// 
 			// lblCopyright
 			// 
-			this.lblCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.lblCopyright.Location = new System.Drawing.Point(8, 197);
+			this.lblCopyright.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.lblCopyright.Location = new System.Drawing.Point(8, 221);
 			this.lblCopyright.Name = "lblCopyright";
 			this.lblCopyright.Size = new System.Drawing.Size(327, 30);
 			this.lblCopyright.TabIndex = 0;
@@ -293,9 +309,10 @@ namespace Choicy
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(351, 258);
+			this.ClientSize = new System.Drawing.Size(351, 286);
 			this.Controls.Add(this.tcChoicy);
-			this.MinimumSize = new System.Drawing.Size(250, 296);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MinimumSize = new System.Drawing.Size(367, 324);
 			this.Name = "MainForm";
 			this.Text = "Choicy";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
@@ -303,6 +320,7 @@ namespace Choicy
 			this.tpText.ResumeLayout(false);
 			this.tpIntructions.ResumeLayout(false);
 			this.tpAbout.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pbChoicy)).EndInit();
 			this.ResumeLayout(false);
 
 		}
