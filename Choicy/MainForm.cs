@@ -36,6 +36,7 @@ namespace Choicy
 			ResetSelectionText( );
 			CheckLatestVersion( "Startup" );
 		}
+		
 
         /// <summary>
         /// Execute the command in the system.
@@ -405,20 +406,11 @@ namespace Choicy
 			}
 			else {
 				tmrChoicy.Enabled = false;
-				IncreaseStatistics ( iRandomLine );
-				IncreaseStatistics ( 0 );
+				IncreaseStatistics ( 0 );  // increase the total count
+				IncreaseStatistics ( iRandomLine );  // increase the last selected line
 			}
 		}
 
-		void WbInstructionsDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-		{
-			/*
-			dynamic htmldoc = wbInstructions.Document.DomDocument as dynamic;
-	        dynamic nodelist = htmldoc.getElementByClassName ("navbar-wrapper") as dynamic;
-	        nodelist.removeChild(nodelist);
-	        */
-		}
-		
 		void PbDonationClick(object sender, EventArgs e)
 		{
 			ExecuteThis ( "https://sistar21.github.io/Choicy/donations.html" );
@@ -428,5 +420,36 @@ namespace Choicy
 		{
 			ExecuteThis ( "https://sistar21.github.io/Choicy/index.html" );
 		}
+		
+        /// <summary>
+        /// The mouse entered a rich text box.  
+        /// Put it in focus, so that the scrolling works.
+        /// </summary>
+        /// <param name="sender">The object that invoked the event that fired the event handler.</param>
+        /// <param name="e">The arguments that the implementor of this event may find useful.</param>
+        void RtbMouseEnter( object sender, System.EventArgs e )
+        {
+            ((RichTextBox)sender).Focus( );
+		}
+        
+		void WbInstructionsMouseOver(object sender, HtmlElementEventArgs e)
+  		{
+			wbInstructions.Document.Focus();
+		}
+        
+		void WbInstructionsDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+		{
+			wbInstructions.Document.Body.MouseOver += new HtmlElementEventHandler(WbInstructionsMouseOver);
+		}
+
+		void WbLicenseMouseOver(object sender, HtmlElementEventArgs e)
+  		{
+			wbLicense.Document.Focus();
+		}
+        
+		void WbLicenseDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+		{
+			wbLicense.Document.Body.MouseOver += new HtmlElementEventHandler(WbLicenseMouseOver);
+		}		
 	}
 }
